@@ -1,0 +1,49 @@
+# =====================================================================
+# SITE INSTITUCIONAL — NOW SERVICE
+# Publicado em: nowservice.com.br (e no endereco .netlify.app do site)
+# ---------------------------------------------------------------------
+# Este site e 100% ESTATICO: nao existe etapa de build, nao existe
+# package.json, nao existe dependencia para instalar.
+# O que esta nesta pasta e exatamente o que vai para o ar.
+#
+# `publish = "."` significa: publique esta propria pasta.
+# Sem essa linha a Netlify usa o padrao, que tambem e a raiz — mas
+# deixar escrito evita que uma configuracao de painel (Base directory /
+# Publish directory herdada de outro site) aponte para uma pasta que
+# aqui nao existe, que e como um deploy falha com "deploy directory
+# does not exist".
+#
+# `command` vazio declara que nao ha build. Nao troque por `npm run build`.
+#
+# CUIDADO: NAO use este arquivo no site do painel de QR Code
+# (now-service-equipamentos). Aquele site tem o seu proprio netlify.toml
+# com base = "pagina-publica". Sao projetos diferentes.
+# =====================================================================
+
+[build]
+  publish = "."
+  command = ""
+
+# Cabecalhos que o site ja usava quando estava no ar.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Imagens e CSS sao arquivos grandes e nao mudam de endereco:
+# cache longo para o cliente nao baixar de novo a cada visita.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+# Sem redirecionamento nenhum, de proposito: este site e uma pagina unica
+# com navegacao por ancora (#servicos, #contato). Nao ha rota de cliente
+# para reescrever, e um catch-all aqui so esconderia link quebrado.

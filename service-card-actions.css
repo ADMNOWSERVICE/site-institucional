@@ -1,0 +1,23 @@
+.service-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.service-content .button-small {
+  margin-top: auto;
+  gap: 9px;
+  font-size: 10px;
+  letter-spacing: -0.2px;
+}
+
+@media (max-width: 750px) {
+  .service-content .button-small {
+    font-size: 12px;
+  }
+}
